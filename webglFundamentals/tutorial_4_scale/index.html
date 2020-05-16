@@ -1,0 +1,45 @@
+<html>
+    <head>
+        <title>Webgl - 2D Rotation</title>
+    </head>
+    <body onload="Init();">
+        <canvas id="game-surface" width="800" height="600">
+            Your browser does not support WebGL.
+        </canvas>
+        <script id="vertexShader" type="x-shader/x-vertex">
+            attribute vec2 a_position;
+
+            uniform vec2 u_resolution;
+            uniform vec2 u_translation;
+            uniform vec2 u_rotation;
+            uniform vec2 u_scale;
+
+            void main(){
+                vec2 scaledPosition = a_position * u_scale;
+
+                vec2 rotatedPosition = vec2(
+                    scaledPosition.x * u_rotation.y - scaledPosition.y * u_rotation.x,
+                    scaledPosition.y * u_rotation.y + scaledPosition.x * u_rotation.x
+                );
+
+                vec2 position = rotatedPosition + u_translation;
+
+                vec2 zeroToOne = position / u_resolution;
+                vec2 zeroToTwo = zeroToOne * 2.0;
+                //vec2 clipSpace = zeroToTwo - 1.0;
+
+                gl_Position = vec4(zeroToTwo * vec2(1, -1), 0, 1);
+            }
+        </script>
+        <script id="fragmentShader" type="x-shader/x-fragment">
+            precision mediump float;
+
+            uniform vec4 u_color;
+
+            void main(){
+                gl_FragColor = u_color;
+            }
+        </script>
+        <script src="app.js"></script>
+    </body>
+</html>

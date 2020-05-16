@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <title>Webgl - Rectangles</title>
+    </head>
+    <body onload="Init();">
+        <canvas id="game-surface" width="800" height="600">
+            Your browser does not support WebGL.
+        </canvas>
+        <script id="vertexShader" type="x-shader/x-vertex">
+            attribute vec2 a_position;
+
+            void main(){
+                gl_Position = vec4(a_position, 0, 1);
+            }
+        </script>
+        <script id="fragmentShader" type="x-shader/x-fragment">
+            precision mediump float;
+
+            uniform vec4 u_color;
+
+            void main(){
+                gl_FragColor = u_color;
+            }
+        </script>
+        <script src="app.js"></script>
+    </body>
+</html>
